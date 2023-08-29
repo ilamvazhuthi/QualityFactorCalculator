@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quality Factor Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f6f6f6;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="button"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="button"]:hover {
+            background-color: #45a049;
+        }
+        h2 {
+            margin-top: 20px;
+            color: #333;
+        }
+        p {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>      
+   <script>
+        function calculate() {
+            // Automation Coverage
+            let totalTestCases = parseFloat(document.getElementById("totalTestCases").value);
+            let automatedTestCases = parseFloat(document.getElementById("automatedTestCases").value);
+            let automationCoverage = (automatedTestCases / totalTestCases) * 100;
+            document.getElementById("automationCoverageResult").innerHTML = "Automation Coverage: " + automationCoverage.toFixed(2) + "%";
+
+            // Pass Rate
+            let passRate = parseFloat(document.getElementById("passRate").value);
+
+            // Code Quality Metrics
+            let codeQuality = parseFloat(document.getElementById("codeQuality").value);
+
+            // Critical Bug Count
+            let criticalBugCount = parseFloat(document.getElementById("criticalBugCount").value);
+
+            // Penalty for Critical Bugs
+            let penalty = criticalBugCount === 0 ? 0 : 5 * criticalBugCount;
+
+            // Quality Factor
+            let qualityFactor = ((automationCoverage + passRate + codeQuality) / 3) - penalty;
+            document.getElementById("qualityFactorResult").innerHTML = "Quality Factor: " + qualityFactor.toFixed(2);
+
+            // Determine Quality Criteria
+            let qualityCriteria;
+            if (qualityFactor >= 95) {
+                qualityCriteria = "Excellent Quality";
+            } else if (qualityFactor >= 85 && qualityFactor < 95) {
+                qualityCriteria = "Good Quality";
+            } else if (qualityFactor >= 75 && qualityFactor < 85) {
+                qualityCriteria = "Moderate Quality";
+            } else {
+                qualityCriteria = "Poor Quality";
+            }
+
+            document.getElementById("qualityCriteriaResult").innerHTML = "Quality Criteria: " + qualityCriteria;
+        }
+    </script>
+ </head>
+<body>
+    <h1>Quality Factor Calculator for WoS API Components</h1>
+    <form>
+        <label>Total Number of Test Cases:</label>
+        <input type="number" id="totalTestCases"><br>
+
+        <label>Number of Automated Test Cases:</label>
+        <input type="number" id="automatedTestCases"><br>
+
+        <label>Pass Rate (%):</label>
+        <input type="number" id="passRate"><br>
+
+        <label>Code Quality Metrics (Sonarqube) (%):</label>
+        <input type="number" id="codeQuality"><br>
+
+        <label>Critical Bug Count:</label>
+        <input type="number" id="criticalBugCount"><br>
+
+        <input type="button" value="Calculate" onclick="calculate()">
+    </form>
+
+    <h2>Results:</h2>
+    <p id="automationCoverageResult"></p>
+    <p id="qualityFactorResult"></p>
+    <p id="qualityCriteriaResult"></p>
+</body>
+</html>
+ 
